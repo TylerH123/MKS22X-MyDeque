@@ -8,7 +8,7 @@ public class MyDeque<E>{
     data = d;
     size = 10;
     start = 0;
-    end = data.length -1;
+    end = 0;
   }
   public MyDeque(int initialCapacity){
     @SuppressWarnings("unchecked")
@@ -16,7 +16,7 @@ public class MyDeque<E>{
     data = d;
     size = initialCapacity;
     start = 0;
-    end = data.length -1;
+    end = 0;
   }
   public int size(){
     return size;
@@ -24,8 +24,8 @@ public class MyDeque<E>{
   public String toString(){
     String output = "{";
     for (int i = start; i != end; i++){
-      if (start >= data.length){
-        start = 0;
+      if (i >= size){
+        i = 0;
       }
       output += data[i] + " ";
     }
@@ -35,33 +35,27 @@ public class MyDeque<E>{
   private void resize(){
     @SuppressWarnings("unchecked")
     E[] arr = (E[]) new Object[size * 2 + 1];
-    for (int i = 0; i < data.length; i++){
+    for (int i = 0; i < size; i++){
       arr[i] = data[i];
     }
     size = size * 2 + 1;
   }
   public void addFirst(E element){
-    if (Math.abs(end - start) == 1){
-      resize();
-    }
     if (start <= 0){
-      start = data.length-1;
+      start = size;
     }
     data[start-1] = element;
     start--;
   }
   public void addLast(E element){
-    if (Math.abs(end - start) == 1){
-      resize();
-    }
-    if (end >= data.length-1){
-      end = 0;
+    if (end >= size-1){
+      end = -1;
     }
     data[end+1] = element;
     end++;
   }
   public E removeFirst(){
-    if (start == data.length-1){
+    if (start == size-1){
       E og = data[start];
       start = 0;
       return og;
@@ -73,7 +67,7 @@ public class MyDeque<E>{
   public E removeLast(){
     if (end == 0){
       E og = data[end];
-      end = data.length-1;
+      end = size-1;
       return og;
     }
     E og = data[end];
@@ -85,5 +79,12 @@ public class MyDeque<E>{
   }
   public E getLast(){
     return data[end];
+  }
+
+  public static void main(String[] args){
+    MyDeque m = new MyDeque();
+    //System.out.println(m.size());
+    m.addFirst(2);
+    System.out.println(m.toString());
   }
 }
