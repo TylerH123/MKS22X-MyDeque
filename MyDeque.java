@@ -29,7 +29,7 @@ public class MyDeque<E>{
       }
       output += data[i] + " ";
     }
-    output += data[end]; 
+    output += data[end];
     return output + "}";
   }
   private void resize(){
@@ -60,8 +60,30 @@ public class MyDeque<E>{
     data[end+1] = element;
     end++;
   }
-  public E removeFirst(){ }
-  public E removeLast(){ }
-  public E getFirst(){ }
-  public E getLast(){ }
+  public E removeFirst(){
+    if (start == data.length-1){
+      E og = data[start];
+      start = 0;
+      return og;
+    }
+    E og = data[start];
+    start++;
+    return og;
+  }
+  public E removeLast(){
+    if (end == 0){
+      E og = data[end];
+      end = data.length-1;
+      return og;
+    }
+    E og = data[end];
+    end--;
+    return og;
+  }
+  public E getFirst(){
+    return data[start];
+  }
+  public E getLast(){
+    return data[end];
+  }
 }
