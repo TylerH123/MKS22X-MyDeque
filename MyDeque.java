@@ -23,18 +23,43 @@ public class MyDeque<E>{
   }
   public String toString(){
     String output = "{";
-    for (int i = 0; i < data.length; i++){
-      if (i == data.length - 1){
-        output += data[i];
+    for (int i = start; i != end; i++){
+      if (start >= data.length){
+        start = 0;
       }
-      else{
-        output += data[i] + " ";
-      }
+      output += data[i] + " ";
     }
-    return output + "}"; 
+    output += data[end]; 
+    return output + "}";
   }
-  public void addFirst(E element){ }
-  public void addLast(E element){ }
+  private void resize(){
+    @SuppressWarnings("unchecked")
+    E[] arr = (E[]) new Object[size * 2 + 1];
+    for (int i = 0; i < data.length; i++){
+      arr[i] = data[i];
+    }
+    size = size * 2 + 1;
+  }
+  public void addFirst(E element){
+    if (Math.abs(end - start) == 1){
+      resize();
+    }
+    if (start <= 0){
+      start = data.length-1;
+    }
+    data[start-1] = element;
+    start--;
+  }
+  public void addLast(E element){
+    if (Math.abs(end - start) == 1){
+      resize();
+    }
+    if (end >= data.length-1){
+      end = 0;
+    }
+    data[end+1] = element;
+    end++;
+  }
   public E removeFirst(){ }
   public E removeLast(){ }
   public E getFirst(){ }
