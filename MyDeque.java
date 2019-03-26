@@ -4,136 +4,133 @@ public class MyDeque<E>{
   private E[] data;
   private int size, start, end;
 
+  @SuppressWarnings("unchecked")
   public MyDeque(){
-    @SuppressWarnings("unchecked")
     E[] d = (E[])new Object[10];
     data = d;
     size = 0;
     start = 0;
     end = 0;
   }
+  @SuppressWarnings("unchecked")
   public MyDeque(int initialCapacity){
-    @SuppressWarnings("unchecked")
     E[] d = (E[])new Object[initialCapacity];
     data = d;
-    size = initialCapacity;
+    size = 0;
     start = 0;
     end = 0;
   }
   public int size(){
-    return Math.abs(end - start);
+    return size;
   }
   public String toString(){
     String output = "{";
-    int g = start;
+    if (size == 0){
+      return "{}";
+    }
+    int s = start;
     for (int i = 0; i < size; i++){
-      if (g >= size){
-        g = 0;
-      }
-      if (g != end){
-        if (data[g] != null){
-          output += data[g] + " ";
-        }
-        g++;
-      }
+      output += data[s%data.length] + " ";
+      s++;
     }
-    if (data[g] != null){
-      output += data[end];
-    }
-    return output + "}";
+    return output.substring(0,output.length()-1) + "}";
   }
-  private void resize(){
-    @SuppressWarnings("unchecked")
-    E[] arr = (E[]) new Object[size * 2 + 1];
-    for (int i = 0; i < size; i++){
-      arr[i] = data[i];
+  @SuppressWarnings("unchecked")
+  private void resize() {
+    E[] arr = (E[])new Object[data.length * 2 + 1];
+    int idx = 0;
+    if (start < end) {
+      for (int i = start; i <= end; i++) {
+        arr[idx] = data[i];
+        idx++;
+      }
     }
-    size = size * 2 + 1;
-  }
-  private boolean isFull(){
-    if (start == size - 1){
-      return start-1 == end;
+    else {
+      for (int i = start; i < data.length; i++) {
+        arr[idx] = data[i];
+        idx++;
+      }
+      for (int i = 0; i <= end; i++) {
+        arr[idx] = data[i];
+        idx++;
+      }
     }
-    if (end == 0){
-      return end+1 == start;
-    }
-    if (start < end){
-      return start - 1 == end;
-    }
-    else{
-      return start + 1 == end;
-    }
+    data = arr;
+    start = 0;
+    end = size-1;
   }
   public void addFirst(E element){
     if (element == null){
       throw new NullPointerException();
     }
-    if (isFull()){
+    if (size == data.length){
       resize();
     }
-    if (data[start] == null){
-      data[start] = element;
-    }
-    else{
-      if (start <= 0){
-        start = size;
+    if (size != 0){
+      if (start == 0){
+        start = data.length-1;
       }
-      data[start-1] = element;
-      start--;
+      else{
+        start--;
+      }
     }
+    data[start-1] = element;
+    size++;
   }
   public void addLast(E element){
     if (element == null){
       throw new NullPointerException();
     }
-    if (isFull()){
+    if (size == data.length){
       resize();
     }
-    if (data[end] == null){
-      data[end] = element;
-    }
-    else {
-      if (end >= size-1){
-        end = -1;
+    if (size != 0){
+      if (end == size-1){
+        end = 0;
       }
-      data[end+1] = element;
-      end++;
+      else{
+        end++;
+      }
     }
+    data[start-1] = element;
+    size++;
   }
   public E removeFirst(){
-    if (size == 0 || data[start] == null){
+    if (size == 0){
       throw new NoSuchElementException();
     }
+    E og = data[start];
     if (start == size-1){
-      E og = data[start];
       start = 0;
+      size--;
       return og;
     }
-    E og = data[start];
     start++;
+    size--;
     return og;
   }
   public E removeLast(){
-    if (size == 0 || data[start] == null){
+    if (size == 0){
       throw new NoSuchElementException();
     }
+    E og = data[end];
     if (end == 0){
-      E og = data[end];
       end = size-1;
+      size--;
       return og;
     }
-    E og = data[end];
+    size--;
     end--;
     return og;
   }
   public E getFirst(){
-    if (size == 0 || data[start] == null){
+    if (size == 0){
       throw new NoSuchElementException();
     }
     return data[start];
   }
   public E getLast(){
-    if (size == 0 || data[start] == null){
+    if (size == 0){
       throw new NoSuchElementException();
     }
     return data[end];
