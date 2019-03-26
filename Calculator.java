@@ -2,33 +2,47 @@ import java.util.*;
 
 public class Calculator{
 
-  //check if input is Integer
-  public static boolean isInteger(String s) {
-    try {
-      Integer.parseInt(s);
+  //check if input is a mathematical sign
+  private static boolean isMath(String s) {
+    return (s.equals("*") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("%"));
+  }
+  //do the math
+  private static double doMath(String s, double x, double y){
+    if (s.equals("*")){
+      return x * y;
     }
-    catch(NumberFormatException e) {
-      return false;
+    if (s.equals("/")){
+      return x / y;
     }
-    return true;
+    if (s.equals("+")){
+      return x + y;
+    }
+    if (s.equals("-")){
+      return x - y;
+    }
+    else if (s.equals("%")){
+      return x % y;
+    }
+    return 0.0;
   }
   /*Evaluate a postfix expression stored in s.
     *Assume valid postfix notation, separated by spaces.
     */
   public static double eval(String s){
     String[] sc = s.split(" ");
-    @SuppressWarnings("rawtypes")
-    MyDeque deq = new MyDeque(sc.length);
+    MyDeque<Double> deq = new MyDeque<Double>(sc.length);
     for (int i = 0; i < deq.size(); i++){
-      if (isInteger(sc[i])){
-        deq.addLast(Integer.parseInt(sc[i]));
+      if (isMath(sc[i])){
+        double num1 = deq.getLast();
+        deq.removeLast();
+        double num2 = deq.getLast();
+        deq.removeLast();
+        deq.addLast(doMath(sc[i],num1,num2));
       }
       else{
-        
+        deq.addLast((double)Integer.parseInt(sc[i]));
       }
     }
-    double total = 0.0;
-
-    return total;
+    return deq.getLast();
   }
 }
