@@ -83,7 +83,8 @@ public class MyDeque<E>{
       throw new NullPointerException();
     }
     if (isFull()){
-      resize();
+      //resize();
+      System.out.println(true);
     }
     if (data[end] == null){
       data[end] = element;
@@ -139,12 +140,15 @@ public class MyDeque<E>{
     @SuppressWarnings("rawtypes")
     MyDeque m = new MyDeque();
     //System.out.println(m.size());
-    m.addFirst(2);
+    /**m.addFirst(2);
     m.addFirst(5);
     m.addFirst(7);
     m.addLast(3);
     m.removeFirst();
-    m.removeLast();
+    m.removeLast();**/
+    System.out.println(m.size());
+    m.resize();
+    System.out.println(m.size());
     System.out.println(m.toString());
   }
 }

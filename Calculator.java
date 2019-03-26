@@ -33,14 +33,12 @@ public class Calculator{
     MyDeque<Double> deq = new MyDeque<Double>(sc.length);
     for (int i = 0; i < deq.size(); i++){
       if (isMath(sc[i])){
-        double num1 = deq.getLast();
-        deq.removeLast();
-        double num2 = deq.getLast();
-        deq.removeLast();
-        deq.addLast(doMath(sc[i],num1,num2));
+        double num1 = deq.removeLast();
+        double num2 = deq.removeLast();
+        deq.addLast(doMath(sc[i],num2,num1));
       }
       else{
-        deq.addLast((double)Integer.parseInt(sc[i]));
+        deq.addLast(Double.parseDouble(sc[i]));
       }
     }
     return deq.getLast();
