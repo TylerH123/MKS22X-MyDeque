@@ -48,16 +48,16 @@ public class MyDeque<E>{
   }
   private boolean isFull(){
     if (start == size - 1){
-      return 0 == end;
+      return start-1 == end;
     }
     if (end == 0){
-      return size - 1 == start;
+      return end+1 == start;
     }
     if (start < end){
-      return start + 1 == end;
+      return start - 1 == end;
     }
     else{
-      return start - 1 == end;
+      return start + 1 == end;
     }
   }
   public void addFirst(E element){
@@ -83,7 +83,7 @@ public class MyDeque<E>{
       throw new NullPointerException();
     }
     if (isFull()){
-      //resize();
+      resize();
       System.out.println(true);
     }
     if (data[end] == null){
