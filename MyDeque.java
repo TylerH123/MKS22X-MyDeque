@@ -74,25 +74,25 @@ public class MyDeque<E>{
         start--;
       }
     }
-    data[start-1] = element;
+    data[start] = element;
     size++;
   }
   public void addLast(E element){
-    if (element == null){
-      throw new NullPointerException();
+    if (element == null) {
+      throw new NullPointerException("Cannot add null");
     }
-    if (size == data.length){
+    if (size == data.length) {
       resize();
     }
-    if (size != 0){
-      if (end == size-1){
+    if (size != 0) {
+      if (end == data.length - 1) {
         end = 0;
       }
-      else{
+      else {
         end++;
       }
     }
-    data[start-1] = element;
+    data[end] = element;
     size++;
   }
   public E removeFirst(){
@@ -102,10 +102,10 @@ public class MyDeque<E>{
     E og = data[start];
     if (start == size-1){
       start = 0;
-      size--;
-      return og;
     }
-    start++;
+    else{
+      start++;
+    }
     size--;
     return og;
   }
@@ -116,11 +116,11 @@ public class MyDeque<E>{
     E og = data[end];
     if (end == 0){
       end = size-1;
-      size--;
-      return og;
+    }
+    else{
+      end--;
     }
     size--;
-    end--;
     return og;
   }
   public E getFirst(){

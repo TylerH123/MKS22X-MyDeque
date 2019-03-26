@@ -31,14 +31,17 @@ public class Calculator{
   public static double eval(String s){
     String[] sc = s.split(" ");
     MyDeque<Double> deq = new MyDeque<Double>(sc.length);
-    for (int i = 0; i < deq.size(); i++){
+    for (int i = 0; i < sc.length; i++){
       if (isMath(sc[i])){
         double num1 = deq.removeLast();
         double num2 = deq.removeLast();
         deq.addLast(doMath(sc[i],num2,num1));
+        //System.out.println("math num:" + deq.toString());
       }
       else{
+        //System.out.println(sc[i]);
         deq.addLast(Double.parseDouble(sc[i]));
+        //System.out.println("regular num:" + deq.toString());
       }
     }
     return deq.getLast();
