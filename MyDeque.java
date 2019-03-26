@@ -8,7 +8,7 @@ public class MyDeque<E>{
     @SuppressWarnings("unchecked")
     E[] d = (E[])new Object[10];
     data = d;
-    size = 10;
+    size = 0;
     start = 0;
     end = 0;
   }
@@ -21,7 +21,7 @@ public class MyDeque<E>{
     end = 0;
   }
   public int size(){
-    return size;
+    return Math.abs(end - start);
   }
   public String toString(){
     String output = "{";
@@ -31,11 +31,15 @@ public class MyDeque<E>{
         g = 0;
       }
       if (g != end){
-        output += data[g] + " ";
+        if (data[g] != null){
+          output += data[g] + " ";
+        }
         g++;
       }
     }
-    output += data[end];
+    if (data[g] != null){
+      output += data[end];
+    }
     return output + "}";
   }
   private void resize(){
@@ -84,7 +88,6 @@ public class MyDeque<E>{
     }
     if (isFull()){
       resize();
-      System.out.println(true);
     }
     if (data[end] == null){
       data[end] = element;
@@ -98,7 +101,7 @@ public class MyDeque<E>{
     }
   }
   public E removeFirst(){
-    if (size == 0){
+    if (size == 0 || data[start] == null){
       throw new NoSuchElementException();
     }
     if (start == size-1){
@@ -111,7 +114,7 @@ public class MyDeque<E>{
     return og;
   }
   public E removeLast(){
-    if (size == 0){
+    if (size == 0 || data[start] == null){
       throw new NoSuchElementException();
     }
     if (end == 0){
@@ -124,13 +127,13 @@ public class MyDeque<E>{
     return og;
   }
   public E getFirst(){
-    if (size == 0){
+    if (size == 0 || data[start] == null){
       throw new NoSuchElementException();
     }
     return data[start];
   }
   public E getLast(){
-    if (size == 0){
+    if (size == 0 || data[start] == null){
       throw new NoSuchElementException();
     }
     return data[end];
@@ -143,12 +146,12 @@ public class MyDeque<E>{
     /**m.addFirst(2);
     m.addFirst(5);
     m.addFirst(7);
-    m.addLast(3);
     m.removeFirst();
     m.removeLast();**/
-    System.out.println(m.size());
-    m.resize();
-    System.out.println(m.size());
+    //m.addLast(3);
+    //System.out.println(m.size());
+    //m.resize();
+    //jSystem.out.println(m.size());
     System.out.println(m.toString());
   }
 }
