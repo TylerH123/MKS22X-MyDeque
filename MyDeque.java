@@ -79,7 +79,7 @@ public class MyDeque<E>{
   }
   public void addLast(E element){
     if (element == null) {
-      throw new NullPointerException("Cannot add null");
+      throw new NullPointerException();
     }
     if (size == data.length) {
       resize();
