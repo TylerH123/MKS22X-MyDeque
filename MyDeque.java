@@ -62,6 +62,8 @@ public class MyDeque<E>{
       }
     }
     data = arr;
+    start = 0;
+    end = size - 1;
   }
   public void addFirst(E element){
     if (element == null){
@@ -69,48 +71,52 @@ public class MyDeque<E>{
     }
     if (start == end + 1 || start == end - 1 && start == data.length){
       resize();
-      start = 0;
-      end = size - 1;
       addFirst(element);
     }
     else if (size == 0){
       data[0] = element;
       start = 0;
       end = 0;
-      size++;
     }
     else if (start == 0 && size < data.length){
       start = data.length - 1;
       data[start] = element;
-      size++;
     }
-    if (size != 0){
-      if (start == 0){
-        start = data.length-1;
-      }
-      else{
-        start--;
-      }
+    else if (start > end + 1){
+      start--;
+      data[start] = element;
     }
-    data[start] = element;
+    else if (start > 0 && start < end){
+      start--;
+      data[start] = element;
+    }
     size++;
   }
   public void addLast(E element){
     if (element == null) {
       throw new NullPointerException();
     }
-    if (size == data.length) {
+    if (end == start + 1 || end == start - 1 && size == data.length || size == data.length) {
       resize();
+      addLast(element);
     }
-    if (size != 0) {
-      if (end == data.length - 1) {
-        end = 0;
-      }
-      else {
-        end++;
-      }
+    else if (size == 0) {
+      data[0] = element;
+      start = 0;
+      end = 0;
     }
-    data[end] = element;
+    else if (start == end && size == 1){
+      end++;
+      data[end] = element;
+    }
+    else if (end < start - 1){
+      end++;
+      data[end] = element;
+    }
+    else if (end > start && end < data.length-1){
+      end++;
+      data[end] = element;
+    }
     size++;
   }
   public E removeFirst(){
