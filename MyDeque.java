@@ -9,16 +9,16 @@ public class MyDeque<E>{
     E[] d = (E[])new Object[10];
     data = d;
     size = 0;
-    start = 0;
-    end = 0;
+    start = -1;
+    end = -1;
   }
   @SuppressWarnings("unchecked")
   public MyDeque(int initialCapacity){
     E[] d = (E[])new Object[initialCapacity];
     data = d;
     size = 0;
-    start = 0;
-    end = 0;
+    start = -1;
+    end = -1;
   }
   public int size(){
     return size;
@@ -28,12 +28,18 @@ public class MyDeque<E>{
     if (size == 0){
       return "{}";
     }
-    int s = start;
-    for (int i = 0; i < size; i++){
-      output += data[s%data.length] + " ";
-      s++;
+    if (start == end){
+      output += data[0];
     }
-    return output.substring(0,output.length()-1) + "}";
+    else{
+      for (int i = start; start < data.length; i++){
+        output += data[i] + " ";
+      }
+      for (int i = 0; i < end; i++){
+        output += data[i] + " ";
+      }
+    }
+    return output + "}";
   }
   @SuppressWarnings("unchecked")
   private void resize() {
@@ -138,7 +144,7 @@ public class MyDeque<E>{
 
   public static void main(String[] args){
     @SuppressWarnings("rawtypes")
-    MyDeque m = new MyDeque();
+    MyDeque<Integer> m = new MyDeque();
     //System.out.println(m.size());
     /**m.addFirst(2);
     m.addFirst(5);
@@ -149,6 +155,11 @@ public class MyDeque<E>{
     //System.out.println(m.size());
     //m.resize();
     //jSystem.out.println(m.size());
-    System.out.println(m.toString());
+    for (int i = 0; i < 50; i++){
+      m.addFirst(i);
+      System.out.println(m.toString());
+      m.removeLast();
+    }
+    //System.out.println(m.toString());
   }
 }
