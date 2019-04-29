@@ -9,16 +9,16 @@ public class MyDeque<E>{
     E[] d = (E[])new Object[10];
     data = d;
     size = 0;
-    start = -1;
-    end = -1;
+    start = 0;
+    end = 0;
   }
   @SuppressWarnings("unchecked")
   public MyDeque(int initialCapacity){
     E[] d = (E[])new Object[initialCapacity];
     data = d;
     size = 0;
-    start = -1;
-    end = -1;
+    start = 0;
+    end = 0;
   }
   public int size(){
     return size;
@@ -28,18 +28,12 @@ public class MyDeque<E>{
     if (size == 0){
       return "{}";
     }
-    if (start == end){
-      output += data[0];
+    int s = start;
+    for (int i = 0; i < size; i++){
+      output += data[s%data.length] + " ";
+      s++;
     }
-    else{
-      for (int i = start; start < data.length; i++){
-        output += data[i] + " ";
-      }
-      for (int i = 0; i < end; i++){
-        output += data[i] + " ";
-      }
-    }
-    return output + "}";
+    return output.substring(0,output.length()-1) + "}";
   }
   @SuppressWarnings("unchecked")
   private void resize() {
@@ -63,60 +57,42 @@ public class MyDeque<E>{
     }
     data = arr;
     start = 0;
-    end = size - 1;
+    end = size-1;
   }
   public void addFirst(E element){
     if (element == null){
       throw new NullPointerException();
     }
-    if (start == end + 1 || start == end - 1 && start == data.length){
+    if (size == data.length){
       resize();
-      addFirst(element);
     }
-    else if (size == 0){
-      data[0] = element;
-      start = 0;
-      end = 0;
+    if (size != 0){
+      if (start == 0){
+        start = data.length-1;
+      }
+      else{
+        start--;
+      }
     }
-    else if (start == 0 && size < data.length){
-      start = data.length - 1;
-      data[start] = element;
-    }
-    else if (start > end + 1){
-      start--;
-      data[start] = element;
-    }
-    else if (start > 0 && start < end){
-      start--;
-      data[start] = element;
-    }
+    data[start] = element;
     size++;
   }
   public void addLast(E element){
     if (element == null) {
       throw new NullPointerException();
     }
-    if (end == start + 1 || end == start - 1 && size == data.length || size == data.length) {
+    if (size == data.length) {
       resize();
-      addLast(element);
     }
-    else if (size == 0) {
-      data[0] = element;
-      start = 0;
-      end = 0;
+    if (size != 0) {
+      if (end == data.length - 1) {
+        end = 0;
+      }
+      else {
+        end++;
+      }
     }
-    else if (start == end && size == 1){
-      end++;
-      data[end] = element;
-    }
-    else if (end < start - 1){
-      end++;
-      data[end] = element;
-    }
-    else if (end > start && end < data.length-1){
-      end++;
-      data[end] = element;
-    }
+    data[end] = element;
     size++;
   }
   public E removeFirst(){
@@ -124,13 +100,11 @@ public class MyDeque<E>{
       throw new NoSuchElementException();
     }
     E og = data[start];
-    if (start < data.length - 1){
-      data[start] = null;
-      start++;
-    }
-    else if (start == data.length - 1){
-      data[start] = null;
+    if (start == size-1){
       start = 0;
+    }
+    else{
+      start++;
     }
     size--;
     return og;
@@ -140,13 +114,11 @@ public class MyDeque<E>{
       throw new NoSuchElementException();
     }
     E og = data[end];
-    if (end > 0){
-      data[end] = null;
-      end--;
+    if (end == 0){
+      end = size-1;
     }
-    else if (end == 0){
-      data[end] = null;
-      end = data.length-1;
+    else{
+      end--;
     }
     size--;
     return og;
@@ -166,7 +138,7 @@ public class MyDeque<E>{
 
   public static void main(String[] args){
     @SuppressWarnings("rawtypes")
-    MyDeque<Integer> m = new MyDeque();
+    MyDeque m = new MyDeque();
     //System.out.println(m.size());
     /**m.addFirst(2);
     m.addFirst(5);
@@ -177,11 +149,6 @@ public class MyDeque<E>{
     //System.out.println(m.size());
     //m.resize();
     //jSystem.out.println(m.size());
-    for (int i = 0; i < 50; i++){
-      m.addFirst(i);
-      System.out.println(m.toString());
-      m.removeLast();
-    }
-    //System.out.println(m.toString());
+    System.out.println(m.toString());
   }
 }
