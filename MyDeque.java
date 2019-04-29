@@ -62,15 +62,27 @@ public class MyDeque<E>{
       }
     }
     data = arr;
-    start = 0;
-    end = size-1;
   }
   public void addFirst(E element){
     if (element == null){
       throw new NullPointerException();
     }
-    if (size == data.length){
+    if (start == end + 1 || start == end - 1 && start == data.length){
       resize();
+      start = 0;
+      end = size - 1;
+      addFirst(element);
+    }
+    else if (size == 0){
+      data[0] = element;
+      start = 0;
+      end = 0;
+      size++;
+    }
+    else if (start == 0 && size < data.length){
+      start = data.length - 1;
+      data[start] = element;
+      size++;
     }
     if (size != 0){
       if (start == 0){
