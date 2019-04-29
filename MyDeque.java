@@ -124,11 +124,13 @@ public class MyDeque<E>{
       throw new NoSuchElementException();
     }
     E og = data[start];
-    if (start == size-1){
-      start = 0;
-    }
-    else{
+    if (start < data.length - 1){
+      data[start] = null;
       start++;
+    }
+    else if (start == data.length - 1){
+      data[start] = null;
+      start = 0;
     }
     size--;
     return og;
@@ -138,11 +140,13 @@ public class MyDeque<E>{
       throw new NoSuchElementException();
     }
     E og = data[end];
-    if (end == 0){
-      end = size-1;
-    }
-    else{
+    if (end > 0){
+      data[end] = null;
       end--;
+    }
+    else if (end == 0){
+      data[end] = null;
+      end = data.length-1;
     }
     size--;
     return og;
