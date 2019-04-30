@@ -35,6 +35,7 @@ public class Calculator{
       if (isMath(sc[i])){
         double num1 = deq.removeLast();
         double num2 = deq.removeLast();
+        //System.out.println(deq.toString());;
         deq.addLast(doMath(sc[i],num2,num1));
         //System.out.println("math num:" + deq.toString());
       }
@@ -44,6 +45,10 @@ public class Calculator{
         //System.out.println("regular num:" + deq.toString());
       }
     }
-    return deq.getLast();
+    return deq.getFirst();
+  }
+  public static void main(String[] args){
+    String nums = "4 4 4 4 4 4 4 4 4 4 4 4 + + + + + + + + + + +";
+    System.out.println(eval(nums));
   }
 }
