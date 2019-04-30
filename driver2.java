@@ -127,11 +127,11 @@ public class driver2 {
 				deque.removeLast();
 				comp.removeLast();
 				if (!edge_check(comp, deque)) {
-					out.add(message(old+".removeLast()", gist_string(comp), gist_string(deque)));
+					System.out.println("Yes"+message(old+".removeLast()", gist_string(comp), gist_string(deque)));
 					break;
 				}
 				if (comp.size() != deque.size()) {
-					out.add(message(old+".removeLast()\n"+gist_string(deque)+".size()", comp.size(), deque.size()));
+					System.out.println(message(old+".removeLast()\n"+gist_string(deque)+".size()", comp.size(), deque.size()));
 					break;
 				}
 			} catch (Exception e) {
@@ -254,11 +254,11 @@ public class driver2 {
 				deque.removeLast();
 				comp.removeLast();
 				if (!edge_check(comp, deque)) {
-					out.add(message(old+".removeLast()", gist_string(comp), gist_string(deque)));
+					System.out.println("No: "+message(old+".removeLast()", gist_string(comp), gist_string(deque)));
 					break;
 				}
 				if (comp.size() != deque.size()) {
-					out.add(message(old+".removeLast()\n"+gist_string(deque)+".size()", comp.size(), deque.size()));
+					System.out.println("Yes:"+message(old+".removeLast()\n"+gist_string(deque)+".size()", comp.size(), deque.size()));
 					break;
 				}
 			} catch (Exception e) {
